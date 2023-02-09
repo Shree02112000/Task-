@@ -1,6 +1,8 @@
 const db = require("../models");
 const Customer =  db.customer;
-const Op = db.sequelize.Op;
+const sequelize=require("sequelize");
+const Op = sequelize.Op;
+
 
 // create customer
 
@@ -9,9 +11,9 @@ exports.create =async (req,res)=>{
         customerName:req.body.customerName,
         customerEmail:req.body.customerEmail,
         phoneNumber:req.body.phoneNumber
-    }).then((customer)=>{
+    }).then((Customer)=>{
         res.json({
-            message:"customer created"
+            message:"customer created", Customer
         });
     })
     .catch(err => {
@@ -23,11 +25,22 @@ exports.create =async (req,res)=>{
 };
 
 //find all
-exports.findAll = (req,res)=>{
-    Customer.findAll()
-    .then((customer)=>{
+exports.findAll = async(req,res)=>{
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 10;
+
+   await Customer.findAll({
+        where: {
+            [Op.or]: [{customerName : { [Op.like]: `%${req.query.search}%` } }]
+        },
+    limit: pageSize,
+    offset: (page - 1) * pageSize
+  })
+    .then((Customer)=>{
         res.json({
             data:Customer,
+            page,
+            pageSize
         })
     })
     .catch(err => {
@@ -40,7 +53,7 @@ exports.findAll = (req,res)=>{
 //find by id
 exports.findByPk =(req,res)=>{
     Customer.findByPk(req.params.id)
-    .then((customer)=>{
+    .then((Customer)=>{
         res.json({
             data:Customer
         })

@@ -24,14 +24,14 @@ module.exports=(sequelize,Sequelize)=>{
             }
         },
         isActive: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.BOOLEAN,
             allowNull: false,
-            defaultValue: 1
+            defaultValue: true
           },
           isDeleted: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.BOOLEAN,
             allowNull: false,
-            default: 0
+            defaultValue:false
           },
           createdAt: {
             type: Sequelize.DATE,
