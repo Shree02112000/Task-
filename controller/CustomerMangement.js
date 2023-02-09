@@ -30,6 +30,12 @@ exports.findAll = (req,res)=>{
             data:Customer,
         })
     })
+    .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while listing the customer."
+        });
+});
 }
 //find by id
 exports.findByPk =(req,res)=>{
@@ -38,7 +44,13 @@ exports.findByPk =(req,res)=>{
         res.json({
             data:Customer
         })
-    })
+    }) 
+    .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while list the specific customer."
+        });
+});
 }
 
 //updatecustomer 
@@ -56,18 +68,30 @@ exports.update=(req,res)=>{
         console.log("update",customer)
         res.json({
             message:"customer update",
+        })
+    })
+    .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while updating the customer."
         });
-    });
+});
 }
 
 //deletecustomer
 exports.delete = (req,res)=>{
     const id = req.params.id;
-    customer.destroy({
-        where:{id:id},
-    }).then(()=>{
+    customer.update({isDeleted:1},
+       {where:{id:id}},
+    ).then(()=>{
         res.json({
             message:"customer deleted"
         })
+    })
+    .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while deleting  the customer."
+        });
     })
 }
