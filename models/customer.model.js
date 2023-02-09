@@ -23,11 +23,35 @@ module.exports=(sequelize,Sequelize)=>{
                 notEmpty:true
             }
         },
-    
-          isDeleted: {
-            type: Sequelize.BOOLEAN,
+        isActive: {
+            type: Sequelize.INTEGER,
             allowNull: false,
-            default: false
+            defaultValue: 1
+          },
+          isDeleted: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            default: 0
+          },
+          createdAt: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW
+          },
+          createdDt: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW
+          },
+          updatedAt: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW
+          },
+          updatedDt: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW
           }
     },{timestamps:true})
 return Customer

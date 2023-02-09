@@ -24,7 +24,7 @@ exports.create =async (req,res)=>{
 
 //find all
 exports.findAll = (req,res)=>{
-    customer.findAll()
+    Customer.findAll()
     .then((customer)=>{
         res.json({
             data:Customer,
@@ -39,7 +39,7 @@ exports.findAll = (req,res)=>{
 }
 //find by id
 exports.findByPk =(req,res)=>{
-    customer.findByPk(req.params.id)
+    Customer.findByPk(req.params.id)
     .then((customer)=>{
         res.json({
             data:Customer
@@ -57,7 +57,7 @@ exports.findByPk =(req,res)=>{
 exports.update=(req,res)=>{
     const id = req.params.id;
     console.log(id)
-    customer.update(
+    Customer.update(
             {
                 customerName:req.body.customerName,
                 customerEmail:req.body.customerEmail,
@@ -65,7 +65,7 @@ exports.update=(req,res)=>{
     },
     {where:{id:req.params.id}}
     ).then(()=>{
-        console.log("update",customer)
+        console.log("update",Customer)
         res.json({
             message:"customer update",
         })
@@ -81,7 +81,7 @@ exports.update=(req,res)=>{
 //deletecustomer
 exports.delete = (req,res)=>{
     const id = req.params.id;
-    customer.update({isDeleted:1},
+    Customer.update({isDeleted:1},
        {where:{id:id}},
     ).then(()=>{
         res.json({
