@@ -3,7 +3,11 @@ const Customer =  db.customer;
 const sequelize=require("sequelize");
 const Op = sequelize.Op;
 
-
+const handleError = (res, err) => {
+    res.status(500).send({
+      error: err.me
+    });
+  };
 // create customer
 
 exports.create =async (req,res)=>{
@@ -17,11 +21,9 @@ exports.create =async (req,res)=>{
         });
     })
     .catch(err => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while creating the customer."
-            });
-    });
+        handleError(res, err);
+      });
+
 };
 
 //find all
@@ -59,11 +61,8 @@ exports.findByPk =(req,res)=>{
         })
     }) 
     .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while list the specific customer."
-        });
-});
+        handleError(res, err);
+      });
 }
 
 //updatecustomer 
@@ -84,11 +83,8 @@ exports.update=(req,res)=>{
         })
     })
     .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while updating the customer."
-        });
-});
+        handleError(res, err);
+      });
 }
 
 //deletecustomer
@@ -102,9 +98,6 @@ exports.delete = (req,res)=>{
         })
     })
     .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while deleting  the customer."
-        });
-    })
+        handleError(res, err);
+      });
 }
